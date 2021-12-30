@@ -9,14 +9,14 @@ from helpers import *
 from inference import *
 
 def main(
-    epoch: int = 1000,
+    epoch: int = 100,
     k: int = 60,
     batch_size: int = 1,
     frequency: int = 100,
     training_length = 48,    #何個のデータを使って予測するか
     forecast_window = 24,    #上のデータをもとに何個の点を予測するか
-    train_csv = "train_dataset.csv",
-    test_csv = "test_dataset.csv",
+    train_csv = "success1.csv",
+    test_csv = "success2.csv",
     path_to_save_model = "save_model/",
     path_to_save_loss = "save_loss/", 
     path_to_save_predictions = "save_predictions/", 
@@ -35,7 +35,7 @@ def main(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--epoch", type=int, default=1000)
+    parser.add_argument("--epoch", type=int, default=100)
     parser.add_argument("--k", type=int, default=60)
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--frequency", type=int, default=100)
