@@ -1,5 +1,5 @@
 import pandas as pd
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, sampler
 from sklearn.preprocessing import MinMaxScaler
 import os
 import torch
@@ -59,3 +59,13 @@ class SensorDataset(Dataset):
         dump(scaler, 'scalar_item.joblib')
 
         return index_in, index_tar, _input, target, sensor_number
+
+    def my_collate_fn(batch):
+        x = []
+        y = []
+        for sample in batch:
+            X, Y = sampler
+            x.append(X)
+            y.append(Y)
+        x = torch.stack(x, dim = 0)
+        return [x, y]
