@@ -78,15 +78,19 @@ def plot_training(epoch, path_to_save, src, prediction, sensor_number, index_in,
     plt.savefig(path_to_save+f"/Epoch_{str(epoch)}.png")
     plt.close()
 
-def plot_training_3(epoch, path_to_save, src, sampled_src, prediction, sensor_number, index_in, index_tar):
+def plot_training_3(epoch, path_to_save, src, sampled_src_x, prediction_x, sensor_number, index_in, index_tar, src_y, sampled_src_y, prediction_y):
 
     # idx_scr = index_in.tolist()[0]
     # idx_tar = index_tar.tolist()[0]
     # idx_pred = idx_scr.append(idx_tar.append([idx_tar[-1] + 1]))
 
-    idx_scr = [i for i in range(len(src))]
-    idx_pred = [i for i in range(1, len(prediction)+1)]
-    idx_sampled_src = [i for i in range(len(sampled_src))]
+    idx_scr_x = [i for i in range(len(src))]
+    idx_pred_x = [i for i in range(1, len(prediction_x)+1)]
+    idx_sampled_src_x = [i for i in range(len(sampled_src_x))]
+
+    idx_scr_y = [i for i in range(len(src))]
+    idx_pred_y = [i for i in range(1, len(prediction_y)+1)]
+    idx_sampled_src_y = [i for i in range(len(sampled_src_y))]
 
     plt.figure(figsize=(15,6))
     plt.rcParams.update({"font.size" : 18})
@@ -95,12 +99,16 @@ def plot_training_3(epoch, path_to_save, src, sampled_src, prediction, sensor_nu
     plt.minorticks_on()
 
     ## REMOVE DROPOUT FOR THIS PLOT TO APPEAR AS EXPECTED !! DROPOUT INTERFERES WITH HOW THE SAMPLED SOURCES ARE PLOTTED
-    plt.plot(idx_sampled_src, sampled_src, 'o-.', color='red', label = 'sampled source', linewidth=1, markersize=10)
-    plt.plot(idx_scr, src, 'o-.', color = 'blue', label = 'input sequence', linewidth=1)
-    plt.plot(idx_pred, prediction, 'o-.', color = 'limegreen', label = 'prediction sequence', linewidth=1)
+    plt.plot(idx_sampled_src_x, sampled_src_x, 'o-.', color='orange', label = 'sampled x', linewidth=1)
+    plt.plot(idx_scr_x, src, 'o-.', color = 'red', label = 'input sequence x', linewidth=1, markersize=10)
+    plt.plot(idx_pred_x, prediction_x, 'o-.', color = 'yellow', label = 'prediction sequence x', linewidth=1)
+
+    plt.plot(idx_sampled_src_y, sampled_src_y, 'o-.', color='lime', label = 'sampled source y', linewidth=1)
+    plt.plot(idx_scr_y, src, 'o-.', color = 'blue', label = 'input sequence y', linewidth=1, markersize=10)
+    plt.plot(idx_pred_y, prediction_y, 'o-.', color = 'orchid', label = 'prediction sequence y', linewidth=1)
     plt.title("Teaching Forcing from Sensor " + str(sensor_number[0]) + ", Epoch " + str(epoch))
-    plt.xlabel("x")
-    plt.ylabel("y")
+    plt.xlabel("Time")
+    plt.ylabel("Coordinate")
     plt.legend()
     plt.savefig(path_to_save+f"/Epoch_{str(epoch)}.png")
     plt.close()
