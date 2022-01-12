@@ -53,19 +53,11 @@ class SensorDataset(Dataset):
 
         scaler.fit(_input[:,0].unsqueeze(-1))
         _input[:,0] = torch.tensor(scaler.transform(_input[:,0].unsqueeze(-1)).squeeze(-1))
+        _input[:,1] = torch.tensor(scaler.transform(_input[:,1].unsqueeze(-1)).squeeze(-1))
         target[:,0] = torch.tensor(scaler.transform(target[:,0].unsqueeze(-1)).squeeze(-1))
+        target[:,1] = torch.tensor(scaler.transform(target[:,1].unsqueeze(-1)).squeeze(-1))
 
         # save the scalar to be used later when inverse translating the data for plotting.
         dump(scaler, 'scalar_item.joblib')
 
-        return index_in, index_tar, _input, target, sensor_number
-
-    def my_collate_fn(batch):
-        x = []
-        y = []
-        for sample in batch:
-            X, Y = sampler
-            x.append(X)
-            y.append(Y)
-        x = torch.stack(x, dim = 0)
-        return [x, y]
+        return index_in, index_tar, _input, target
