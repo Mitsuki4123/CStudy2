@@ -1,5 +1,5 @@
 import pandas as pd
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, sampler
 from sklearn.preprocessing import MinMaxScaler
 import os
 import torch
@@ -53,9 +53,11 @@ class SensorDataset(Dataset):
 
         scaler.fit(_input[:,0].unsqueeze(-1))
         _input[:,0] = torch.tensor(scaler.transform(_input[:,0].unsqueeze(-1)).squeeze(-1))
+        _input[:,1] = torch.tensor(scaler.transform(_input[:,1].unsqueeze(-1)).squeeze(-1))
         target[:,0] = torch.tensor(scaler.transform(target[:,0].unsqueeze(-1)).squeeze(-1))
+        target[:,1] = torch.tensor(scaler.transform(target[:,1].unsqueeze(-1)).squeeze(-1))
 
         # save the scalar to be used later when inverse translating the data for plotting.
         dump(scaler, 'scalar_item.joblib')
 
-        return index_in, index_tar, _input, target, sensor_number
+        return index_in, index_tar, _input, target
