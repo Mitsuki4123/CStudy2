@@ -9,12 +9,12 @@ from helpers import *
 from inference import *
 
 def main(
-    epoch: int = 1000,
+    epoch: int = 5000,
     k: int = 60,
     batch_size: int = 1,
     frequency: int = 100,
-    training_length = 48,    #何個のデータを使って予測するか
-    forecast_window = 24,    #上のデータをもとに何個の点を予測するか
+    training_length = 50,    #何個のデータを使って予測するか
+    forecast_window = 25,    #上のデータをもとに何個の点を予測するか
     train_csv = "success1.csv",
     test_csv = "success2.csv",
     path_to_save_model = "save_model/",
