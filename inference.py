@@ -48,8 +48,18 @@ def inference(path_to_save_predictions, forecast_window, dataloader, device, pat
                     pos_encoding_old_vals = src[i+1:, :, 1:] # 46, 1, 6, pop positional encoding first value: t2 -- t47
                     pos_encoding_new_val = target[i + 1, :, 1:].unsqueeze(1) # 1, 1, 6, append positional encoding of last predicted value: t48
                     pos_encodings = torch.cat((pos_encoding_old_vals, pos_encoding_new_val)) # 47, 1, 6 positional encodings matched with prediction: t2 -- t48
+
+
+
+                    torch.reshape(prediction, (49, 1, 2))
+                    # prediction1 = prediction[:, :, :1]
+                    # print(src[i+1:, :, 0])
+                    # print(prediction[:, :, :1].squeeze(1))
+                    prediction1 = prediction[:, :, :1].squeeze(-1)
+
+                    next_input_model = torch.cat((src[i+1:, :, 0], prediction1[-1][:].unsqueeze(-1)))
                     
-                    next_input_model = torch.cat((src[i+1:, :, 0], prediction[-1,: ,:])) #t2 -- t47, t48'
+                    # next_input_model = torch.cat((src[i+1:, :, 0], prediction[-1,: ,:, 0].unsqueeze(0))) #t2 -- t47, t48'
                     next_input_model = torch.cat((next_input_model, pos_encodings), dim = 2) # 47, 1, 7 input for next round
 
                 true = torch.cat((src[1:,:,0],target[:-1,:,0]))

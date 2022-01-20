@@ -47,7 +47,7 @@ def plot_prediction(title, path_to_save, src, tgt, prediction, index_in, index_t
     plt.xlabel("time")
     plt.ylabel("coordinate")
     plt.legend()
-    plt.title("Forecast from coordinate" + str(sensor_number[0]))
+    plt.title("Forecast from coordinate")
 
     # save
     plt.savefig(path_to_save+f"Prediction_{title}.png")
